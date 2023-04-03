@@ -2,10 +2,14 @@ package tema1;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class VerificareSir extends JFrame {
 
-    private JTextField patternTextField, stringTextField;
+    
+	private static final long serialVersionUID = 1L;
+	private JTextField patternTextField, stringTextField;
     private JLabel patternLabel, stringLabel, resultLabel;
     private JButton verifyButton;
 
@@ -36,8 +40,13 @@ public class VerificareSir extends JFrame {
     private void verifyString() {
         String pattern = patternTextField.getText();
         String string = stringTextField.getText();
-        boolean match = string.matches(pattern);
-        resultLabel.setText(match ? "Sirul respecta patternul." : "Sirul nu respecta paternul.");
+        try {
+            Pattern.compile(pattern); // verifică dacă modelul este valid
+            boolean match = string.matches(pattern);
+            resultLabel.setText(match ? "Șirul respectă pattern-ul." : "Șirul nu respectă pattern-ul.");//returneaza daca daca sirul respecta patternul sau nu
+        } catch (PatternSyntaxException e) {
+            resultLabel.setText("Modelul nu este introdus corect.");
+        }
     }
 
     public static void main(String[] args) {
